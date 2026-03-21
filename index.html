@@ -23,7 +23,11 @@
   input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
   input[type=number] { -moz-appearance: textfield; }
   button { cursor: pointer; font-family: inherit; }
+
+  /* Container */
   .app { max-width: 430px; margin: 0 auto; min-height: 100vh; position: relative; padding-bottom: 120px; }
+
+  /* Header */
   .header {
     background: linear-gradient(135deg, #1C2941 0%, #2A3F5F 60%, #344B6E 100%);
     padding: 52px 22px 22px;
@@ -40,32 +44,47 @@
   }
   .reading-count .num { font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 600; color: #fff; }
   .reading-count .lbl { font-size: 11px; color: #8CA0BE; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Average Card */
   .avg-card {
     margin: 16px 16px 0; padding: 18px 20px; border-radius: 18px;
     backdrop-filter: blur(8px); border-left: 4px solid transparent;
-    animation: fadeUp 0.4s ease-out; transition: all 0.3s ease;
+    animation: fadeUp 0.4s ease-out;
+    transition: all 0.3s ease;
   }
   .avg-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .avg-label { font-size: 13px; font-weight: 500; color: #556; text-transform: uppercase; letter-spacing: 0.5px; }
-  .avg-badge { font-size: 11px; font-weight: 600; color: #fff; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .avg-badge {
+    font-size: 11px; font-weight: 600; color: #fff; padding: 3px 10px;
+    border-radius: 20px; text-transform: uppercase; letter-spacing: 0.3px;
+  }
   .avg-values { display: flex; align-items: baseline; gap: 8px; }
   .avg-big { font-family: 'JetBrains Mono', monospace; font-size: 38px; font-weight: 600; letter-spacing: -1px; }
   .avg-unit { font-size: 14px; color: #889; font-weight: 400; }
   .avg-meta { font-size: 12px; color: #889; margin-top: 6px; }
+
+  /* Trend Chart */
   .trend-card {
     margin: 12px 16px 0; padding: 14px 16px; border-radius: 16px;
-    background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.05); animation: fadeUp 0.45s ease-out;
+    background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    animation: fadeUp 0.45s ease-out;
   }
   .trend-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
   .trend-title { font-size: 12px; font-weight: 600; color: #889; text-transform: uppercase; letter-spacing: 0.5px; }
   .trend-subtitle { font-size: 11px; color: #AAB; }
   .trend-canvas { width: 100%; height: 120px; display: block; border-radius: 8px; }
+
+  /* Toggle */
   .toggle-wrap { display: flex; justify-content: center; margin-top: 16px; }
-  .toggle { display: flex; background: #DDE2E8; border-radius: 12px; padding: 3px; position: relative; }
+  .toggle {
+    display: flex; background: #DDE2E8; border-radius: 12px; padding: 3px;
+    position: relative;
+  }
   .toggle button {
     border: none; background: transparent; padding: 8px 18px;
     border-radius: 10px; font-size: 13px; font-weight: 500; color: #667;
-    transition: color 0.25s ease; position: relative; z-index: 1;
+    transition: color 0.25s ease;
+    position: relative; z-index: 1;
   }
   .toggle button.active { color: #1C2941; font-weight: 600; }
   .toggle-slider {
@@ -75,9 +94,13 @@
     transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 0;
   }
+
+  /* List */
   .list-section { padding: 12px 16px 0; }
   .view-transition { transition: opacity 0.2s ease; }
   .view-fade-out { opacity: 0; }
+
+  /* Card */
   .card {
     background: #fff; border-radius: 14px; padding: 14px 16px;
     margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -107,10 +130,14 @@
   .note-tag { font-size: 11px; color: #667; background: #F0F2F5; padding: 3px 10px; border-radius: 8px; font-style: italic; }
   .card.compact { padding: 12px 14px; }
   .card.compact .card-bp-val { font-size: 22px; }
+
+  /* Day group */
   .day-group { margin-bottom: 20px; }
   .day-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 0 4px; }
   .day-date { font-size: 14px; font-weight: 600; color: #1C2941; }
   .day-avg { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; }
+
+  /* Empty */
   .empty-state { text-align: center; padding: 48px 20px; }
   .empty-icon-wrap {
     width: 80px; height: 80px; margin: 0 auto 16px;
@@ -120,6 +147,8 @@
   .empty-icon-wrap svg { width: 36px; height: 36px; color: #AAB5C4; }
   .empty-text { font-size: 16px; color: #556; margin-top: 4px; font-weight: 500; }
   .empty-hint { font-size: 13px; color: #99A; margin-top: 6px; line-height: 1.5; }
+
+  /* Legend */
   .legend {
     margin: 16px 16px 0; padding: 16px; background: #fff;
     border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -130,14 +159,21 @@
   .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .legend-label { font-size: 13px; color: #334; font-weight: 500; flex: 1; }
   .legend-range { font-size: 12px; color: #889; font-family: 'JetBrains Mono', monospace; }
+
+  /* Overlay */
   .overlay {
     position: fixed; inset: 0; background: rgba(0,0,0,0);
     backdrop-filter: blur(0px); z-index: 100;
     display: flex; align-items: flex-end; justify-content: center;
     transition: background 0.3s ease, backdrop-filter 0.3s ease;
   }
-  .overlay.visible { background: rgba(0,0,0,0.35); backdrop-filter: blur(4px); }
+  .overlay.visible {
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(4px);
+  }
   .overlay.center { align-items: center; }
+
+  /* Form sheet */
   .form-sheet {
     background: #fff; border-radius: 24px 24px 0 0; width: 100%; max-width: 430px;
     padding: 12px 22px 36px;
@@ -208,6 +244,8 @@
     animation: ripple 0.4s ease-out forwards;
   }
   @keyframes ripple { to { transform: scaleX(1); opacity: 0; } }
+
+  /* Modal */
   .modal {
     background: #fff; border-radius: 18px; padding: 24px 22px 18px;
     width: 80%; max-width: 320px; margin: auto;
@@ -220,7 +258,8 @@
   .modal-btns { display: flex; gap: 10px; }
   .modal-cancel {
     flex: 1; padding: 12px; font-size: 14px; font-weight: 600; color: #667;
-    background: #F0F2F5; border: none; border-radius: 12px; transition: background 0.15s;
+    background: #F0F2F5; border: none; border-radius: 12px;
+    transition: background 0.15s;
   }
   .modal-cancel:active { background: #E4E7EB; }
   .modal-delete {
@@ -229,6 +268,8 @@
     transition: background 0.15s, transform 0.1s;
   }
   .modal-delete:active { background: #E0342A; transform: scale(0.98); }
+
+  /* Edit Time Modal */
   .edit-modal {
     background: #fff; border-radius: 18px; padding: 24px 22px 20px;
     width: 88%; max-width: 340px; margin: auto;
@@ -248,6 +289,8 @@
     transition: transform 0.1s;
   }
   .modal-save:active { transform: scale(0.98); }
+
+  /* Report edit button */
   .report-edit-btn {
     width: 24px; height: 24px; border: none; background: #F0F2F5;
     color: #667; font-size: 12px; font-weight: 700; border-radius: 6px;
@@ -256,6 +299,8 @@
     margin-right: 4px;
   }
   .report-edit-btn:hover, .report-edit-btn:active { opacity: 1; background: #E8ECF1; color: #2A3F5F; }
+
+  /* FAB */
   .fab {
     position: fixed; bottom: 28px; left: 50%; margin-left: -28px;
     width: 56px; height: 56px; border-radius: 50%;
@@ -267,6 +312,8 @@
   }
   .fab:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(255,59,48,0.4); }
   .fab:active { transform: scale(0.95); }
+
+  /* Toast */
   .toast {
     position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px);
     background: #1C2941; color: #fff; padding: 10px 22px;
@@ -276,6 +323,8 @@
     transition: opacity 0.25s ease, transform 0.25s ease;
   }
   .toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* Export bar */
   .export-bar { margin: 16px 16px 0; display: flex; gap: 8px; }
   .export-btn {
     flex: 1; padding: 10px; font-size: 12px; font-weight: 600;
@@ -286,6 +335,8 @@
   }
   .export-btn:active { background: #F0F4F8; transform: scale(0.97); }
   .export-btn svg { width: 14px; height: 14px; }
+
+  /* Report Section */
   .report-section { padding: 0 16px; }
   .report-panel {
     background: #fff; border-radius: 16px; overflow: hidden;
@@ -346,6 +397,8 @@
   .report-export-bar {
     display: flex; gap: 8px; padding: 14px 18px; border-top: 1px solid #EAEEF3;
   }
+
+  /* Animations */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
   @keyframes fabPop { from { transform: scale(0); } to { transform: scale(1); } }
@@ -353,6 +406,7 @@
 </head>
 <body>
 <div class="app" id="app">
+  <!-- Header -->
   <div class="header">
     <div>
       <h1>BP Tracker</h1>
@@ -363,6 +417,8 @@
       <span class="lbl">today</span>
     </div>
   </div>
+
+  <!-- Average Card -->
   <div class="avg-card hidden" id="avgCard">
     <div class="avg-header">
       <span class="avg-label" id="avgLabel">Today's Average</span>
@@ -374,6 +430,8 @@
     </div>
     <div class="avg-meta" id="avgMeta"></div>
   </div>
+
+  <!-- Trend Chart -->
   <div class="trend-card hidden" id="trendCard">
     <div class="trend-header">
       <span class="trend-title">Trend</span>
@@ -381,6 +439,8 @@
     </div>
     <canvas class="trend-canvas" id="trendCanvas"></canvas>
   </div>
+
+  <!-- Toggle -->
   <div class="toggle-wrap">
     <div class="toggle" id="toggle">
       <div class="toggle-slider" id="toggleSlider"></div>
@@ -389,6 +449,8 @@
       <button id="btnReports" onclick="switchView('reports')">Reports</button>
     </div>
   </div>
+
+  <!-- Export -->
   <div class="export-bar" id="exportBar">
     <button class="export-btn" onclick="exportCSV()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -399,17 +461,29 @@
       Export JSON
     </button>
   </div>
+
+  <!-- Readings List -->
   <div class="list-section" id="listSection"></div>
+
+  <!-- Reports Section -->
   <div class="report-section hidden" id="reportSection"></div>
+
+  <!-- Legend -->
   <div class="legend" id="legendSection">
     <p class="legend-title">BP Categories (AHA)</p>
     <div class="legend-grid" id="legendGrid"></div>
   </div>
 </div>
+
+<!-- Toast -->
 <div class="toast" id="toast"></div>
+
+<!-- FAB -->
 <button class="fab" id="fab" onclick="openForm()">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
 </button>
+
+<!-- Form Overlay -->
 <div class="overlay hidden" id="formOverlay" onclick="closeForm()">
   <div class="form-sheet" onclick="event.stopPropagation()">
     <div class="form-handle"></div>
@@ -454,6 +528,8 @@
     <button class="save-btn" id="saveBtn" onclick="addReading()">Save Reading</button>
   </div>
 </div>
+
+<!-- Delete Modal Overlay -->
 <div class="overlay center hidden" id="deleteOverlay" onclick="closeDeleteModal()">
   <div class="modal" onclick="event.stopPropagation()">
     <p class="modal-text">Delete this reading?</p>
@@ -463,6 +539,8 @@
     </div>
   </div>
 </div>
+
+<!-- Edit Time Modal Overlay -->
 <div class="overlay center hidden" id="editTimeOverlay" onclick="closeEditTime()">
   <div class="edit-modal" onclick="event.stopPropagation()">
     <p class="edit-modal-title">Edit Date & Time</p>
@@ -483,12 +561,16 @@
     </div>
   </div>
 </div>
+
 <script>
+// ── Data ────────────────────────────────────────────────────
 const STORAGE_KEY = 'bp-readings-v2';
 let readings = [];
 let currentView = 'today';
 let deleteTargetId = null;
 let editTargetId = null;
+
+// ── BP Classification ───────────────────────────────────────
 const BP_CATS = [
   { key: 'normal',     label: 'Normal',              color: '#34C759', bg: 'rgba(52,199,89,0.08)',  range: '< 120/80' },
   { key: 'elevated',   label: 'Elevated',            color: '#FF9F0A', bg: 'rgba(255,159,10,0.08)', range: '120-129/<80' },
@@ -496,6 +578,7 @@ const BP_CATS = [
   { key: 'highStage2', label: 'High \u2013 Stage 2', color: '#FF3B30', bg: 'rgba(255,59,48,0.08)',  range: '\u2265140/\u226590' },
   { key: 'crisis',     label: 'Hypertensive Crisis',  color: '#AF1B3F', bg: 'rgba(175,27,63,0.09)', range: '\u2265180/\u2265120' },
 ];
+
 function classifyBP(sys, dia) {
   if (sys < 120 && dia < 80) return BP_CATS[0];
   if (sys >= 180 || dia >= 120) return BP_CATS[4];
@@ -504,6 +587,8 @@ function classifyBP(sys, dia) {
   if (sys >= 120 && dia < 80) return BP_CATS[1];
   return BP_CATS[0];
 }
+
+// ── Helpers ─────────────────────────────────────────────────
 function fmtTime(iso) {
   return new Date(iso).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
 }
@@ -521,9 +606,12 @@ function todayKey() { return dateKey(new Date().toISOString()); }
 function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(readings)); }
 function load() {
   try { readings = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { readings = []; }
+  // Ensure readings are sorted (fixes manually edited or corrupted data)
   readings.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 }
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+// ── Toast ───────────────────────────────────────────────────
 function showToast(msg) {
   const el = document.getElementById('toast');
   el.textContent = msg;
@@ -531,6 +619,8 @@ function showToast(msg) {
   clearTimeout(showToast._t);
   showToast._t = setTimeout(() => el.classList.remove('visible'), 2200);
 }
+
+// ── Toggle Slider ───────────────────────────────────────────
 function updateToggleSlider() {
   const btns = { today: 'btnToday', all: 'btnAll', reports: 'btnReports' };
   const activeBtn = document.getElementById(btns[currentView]);
@@ -540,10 +630,14 @@ function updateToggleSlider() {
     slider.style.width = activeBtn.offsetWidth + 'px';
   }
 }
+
+// ── Trend Chart ─────────────────────────────────────────────
 function renderTrendChart() {
   const card = document.getElementById('trendCard');
   if (readings.length < 2) { card.classList.add('hidden'); return; }
   card.classList.remove('hidden');
+
+  // Get last 14 readings (newest to oldest), then reverse for left-to-right chronological
   const data = readings.slice(0, 14).reverse();
   const canvas = document.getElementById('trendCanvas');
   const dpr = window.devicePixelRatio || 1;
@@ -553,16 +647,23 @@ function renderTrendChart() {
   const ctx = canvas.getContext('2d');
   ctx.scale(dpr, dpr);
   const W = rect.width, H = rect.height;
+
+  // Calculate ranges
   const allSys = data.map(r => r.systolic);
   const allDia = data.map(r => r.diastolic);
   const minVal = Math.min(...allDia) - 10;
   const maxVal = Math.max(...allSys) + 10;
   const range = maxVal - minVal || 1;
+
   const padX = 10, padY = 12;
   const chartW = W - padX * 2, chartH = H - padY * 2;
+
   function x(i) { return padX + (i / (data.length - 1)) * chartW; }
   function y(v) { return padY + (1 - (v - minVal) / range) * chartH; }
+
   ctx.clearRect(0, 0, W, H);
+
+  // Reference lines
   [120, 140].forEach(ref => {
     if (ref >= minVal && ref <= maxVal) {
       const ry = y(ref);
@@ -571,11 +672,14 @@ function renderTrendChart() {
       ctx.setLineDash([4, 4]);
       ctx.beginPath(); ctx.moveTo(padX, ry); ctx.lineTo(W - padX, ry); ctx.stroke();
       ctx.setLineDash([]);
+
       ctx.fillStyle = ref === 120 ? 'rgba(52,199,89,0.5)' : 'rgba(255,59,48,0.5)';
       ctx.font = '500 9px DM Sans';
       ctx.fillText(ref.toString(), padX, ry - 3);
     }
   });
+
+  // Systolic area fill
   ctx.beginPath();
   ctx.moveTo(x(0), y(data[0].systolic));
   data.forEach((r, i) => { if (i > 0) ctx.lineTo(x(i), y(r.systolic)); });
@@ -586,6 +690,8 @@ function renderTrendChart() {
   grad.addColorStop(1, 'rgba(42,63,95,0.01)');
   ctx.fillStyle = grad;
   ctx.fill();
+
+  // Systolic line
   ctx.beginPath();
   ctx.moveTo(x(0), y(data[0].systolic));
   data.forEach((r, i) => { if (i > 0) ctx.lineTo(x(i), y(r.systolic)); });
@@ -594,45 +700,63 @@ function renderTrendChart() {
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
   ctx.stroke();
+
+  // Diastolic line
   ctx.beginPath();
   ctx.moveTo(x(0), y(data[0].diastolic));
   data.forEach((r, i) => { if (i > 0) ctx.lineTo(x(i), y(r.diastolic)); });
   ctx.strokeStyle = '#8CA0BE';
   ctx.lineWidth = 2;
   ctx.stroke();
+
+  // Dots
   data.forEach((r, i) => {
     const cat = classifyBP(r.systolic, r.diastolic);
+    // Systolic dot
     ctx.beginPath();
     ctx.arc(x(i), y(r.systolic), 3, 0, Math.PI * 2);
     ctx.fillStyle = cat.color;
     ctx.fill();
+    // Diastolic dot
     ctx.beginPath();
     ctx.arc(x(i), y(r.diastolic), 2.5, 0, Math.PI * 2);
     ctx.fillStyle = '#8CA0BE';
     ctx.fill();
   });
+
+  // Subtitle
   const oldest = fmtDate(data[0].timestamp);
   const newest = fmtDate(data[data.length - 1].timestamp);
   document.getElementById('trendSubtitle').textContent =
     data.length + ' readings \u00B7 ' + (oldest === newest ? oldest : oldest + ' \u2013 ' + newest);
 }
+
+// ── Render ──────────────────────────────────────────────────
 function render() {
   const tk = todayKey();
   const todayR = readings.filter(r => dateKey(r.timestamp) === tk);
+
+  // Header
   document.getElementById('headerDate').textContent = fmtDateLong(new Date().toISOString());
   document.getElementById('todayCount').textContent = todayR.length;
+
+  // Show/hide sections based on view
   const isReport = currentView === 'reports';
   document.getElementById('listSection').style.display = isReport ? 'none' : '';
   document.getElementById('reportSection').classList.toggle('hidden', !isReport);
   document.getElementById('legendSection').style.display = isReport ? 'none' : '';
   document.getElementById('exportBar').style.display = isReport ? 'none' : '';
   document.getElementById('trendCard').classList.toggle('hidden', isReport || readings.length < 2);
+
   updateToggleSlider();
+
   if (isReport) {
     document.getElementById('avgCard').classList.add('hidden');
     renderReports();
     return;
   }
+
+  // Average
   const pool = currentView === 'today' ? todayR : readings;
   const avgCard = document.getElementById('avgCard');
   if (pool.length > 0) {
@@ -647,6 +771,7 @@ function render() {
     document.getElementById('avgBadge').style.background = cat.color;
     document.getElementById('avgBig').textContent = avgSys + '/' + avgDia;
     document.getElementById('avgBig').style.color = cat.color;
+
     const avgPulse = pool.filter(r => r.pulse).length > 0
       ? Math.round(pool.filter(r => r.pulse).reduce((s,r) => s + r.pulse, 0) / pool.filter(r => r.pulse).length)
       : null;
@@ -656,7 +781,11 @@ function render() {
   } else {
     avgCard.classList.add('hidden');
   }
+
+  // Trend chart
   if (!isReport) renderTrendChart();
+
+  // List
   const list = document.getElementById('listSection');
   list.innerHTML = '';
   if (currentView === 'today') {
@@ -703,6 +832,8 @@ function render() {
     }
   }
 }
+
+// ── Reports ─────────────────────────────────────────────────
 function renderReports() {
   const sec = document.getElementById('reportSection');
   if (readings.length === 0) {
@@ -716,6 +847,7 @@ function renderReports() {
     </div></div>`;
     return;
   }
+
   const avgSys = Math.round(readings.reduce((s,r) => s + r.systolic, 0) / readings.length);
   const avgDia = Math.round(readings.reduce((s,r) => s + r.diastolic, 0) / readings.length);
   const maxSys = Math.max(...readings.map(r => r.systolic));
@@ -725,27 +857,29 @@ function renderReports() {
   const avgCat = classifyBP(avgSys, avgDia);
   const highCat = classifyBP(maxSys, maxDia);
   const lowCat = classifyBP(minSys, minDia);
+
   const grouped = {};
   readings.forEach(r => { const k = dateKey(r.timestamp); (grouped[k] = grouped[k] || []).push(r); });
   const dates = Object.keys(grouped).sort((a,b) => b.localeCompare(a));
   const totalDays = dates.length;
+
   let rows = '';
   dates.forEach(dk => {
     const dayR = grouped[dk];
     const dAvgSys = Math.round(dayR.reduce((s,r) => s + r.systolic, 0) / dayR.length);
     const dAvgDia = Math.round(dayR.reduce((s,r) => s + r.diastolic, 0) / dayR.length);
     const dCat = classifyBP(dAvgSys, dAvgDia);
-    rows += `<tr class="report-day-divider"><td colspan="4">${fmtDate(dayR[0].timestamp)}<span class="report-day-avg" style="color:${dCat.color}">Avg ${dAvgSys}/${dAvgDia} mmHg \u00B7 ${dayR.length} reading${dayR.length!==1?'s':''}</span></td></tr>`;
+    rows += `<tr class="report-day-divider"><td colspan="3">${fmtDate(dayR[0].timestamp)}<span class="report-day-avg" style="color:${dCat.color}">Avg ${dAvgSys}/${dAvgDia} mmHg \u00B7 ${dayR.length} reading${dayR.length!==1?'s':''}</span></td></tr>`;
     dayR.forEach(r => {
       const cat = classifyBP(r.systolic, r.diastolic);
       rows += `<tr>
         <td class="td-time">${fmtTime(r.timestamp)}</td>
         <td class="td-bp" style="color:${cat.color}">${r.systolic}/${r.diastolic}</td>
         <td class="td-cat"><span class="cat-pill" style="color:${cat.color};background:${cat.bg}">${cat.label}</span></td>
-        <td class="td-action"><button class="report-edit-btn" onclick="openEditTime('${esc(r.id)}')" title="Edit time">&#9998;</button><button class="report-del-btn" onclick="openDeleteModal('${esc(r.id)}')" title="Delete">\u2715</button></td>
       </tr>`;
     });
   });
+
   sec.innerHTML = `
     <div class="report-panel">
       <div class="report-header-bar">
@@ -773,7 +907,6 @@ function renderReports() {
               <th>Time</th>
               <th>BP</th>
               <th>Category</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>${rows}</tbody>
@@ -791,11 +924,13 @@ function renderReports() {
       </div>
     </div>`;
 }
+
 function createCard(r, compact, index) {
   const cat = classifyBP(r.systolic, r.diastolic);
   const card = document.createElement('div');
   card.className = 'card' + (compact ? ' compact' : '');
   card.style.borderLeftColor = cat.color;
+  // Stagger animation delay (cap at 300ms)
   card.style.animationDelay = Math.min(index * 40, 300) + 'ms';
   let extras = '';
   if (r.pulse) extras += `<span class="pulse-tag">\u2665 ${r.pulse} bpm</span>`;
@@ -822,6 +957,8 @@ function createCard(r, compact, index) {
     </div>`;
   return card;
 }
+
+// ── Legend ───────────────────────────────────────────────────
 function renderLegend() {
   const grid = document.getElementById('legendGrid');
   grid.innerHTML = BP_CATS.map(c => `
@@ -831,6 +968,8 @@ function renderLegend() {
       <span class="legend-range">${c.range}</span>
     </div>`).join('');
 }
+
+// ── Actions ─────────────────────────────────────────────────
 function switchView(v) {
   currentView = v;
   document.getElementById('btnToday').classList.toggle('active', v === 'today');
@@ -838,9 +977,11 @@ function switchView(v) {
   document.getElementById('btnReports').classList.toggle('active', v === 'reports');
   render();
 }
+
 function openOverlay(id) {
   const el = document.getElementById(id);
   el.classList.remove('hidden');
+  // Force reflow before adding visible class so transition fires
   void el.offsetHeight;
   el.classList.add('visible');
 }
@@ -849,9 +990,11 @@ function closeOverlay(id) {
   el.classList.remove('visible');
   setTimeout(() => el.classList.add('hidden'), 350);
 }
+
 function openForm() {
   openOverlay('formOverlay');
   document.getElementById('fab').classList.add('hidden');
+  // Default date/time to now
   const now = new Date();
   const y = now.getFullYear();
   const m = String(now.getMonth()+1).padStart(2,'0');
@@ -876,6 +1019,7 @@ function closeForm() {
     document.getElementById('fab').classList.remove('hidden');
   }, 350);
 }
+
 function updatePreview() {
   const sys = parseInt(document.getElementById('inputSys').value);
   const dia = parseInt(document.getElementById('inputDia').value);
@@ -891,6 +1035,7 @@ function updatePreview() {
     badge.classList.remove('visible');
   }
 }
+
 function clearValidation() {
   document.getElementById('inputSys').classList.remove('input-error');
   document.getElementById('inputDia').classList.remove('input-error');
@@ -900,11 +1045,14 @@ function clearValidation() {
   document.getElementById('diaHint').textContent = 'lower';
   document.getElementById('diaHint').className = 'input-hint';
 }
+
 function addReading() {
   clearValidation();
   let hasError = false;
+
   const sys = parseInt(document.getElementById('inputSys').value);
   const dia = parseInt(document.getElementById('inputDia').value);
+
   if (!sys || sys < 50 || sys > 300) {
     document.getElementById('inputSys').classList.add('input-error');
     document.getElementById('sysHint').textContent = '50\u2013300 required';
@@ -917,6 +1065,7 @@ function addReading() {
     document.getElementById('diaHint').className = 'input-error-msg';
     hasError = true;
   }
+
   const pulseVal = document.getElementById('inputPulse').value;
   let pulse = null;
   if (pulseVal) {
@@ -927,12 +1076,15 @@ function addReading() {
       hasError = true;
     }
   }
+
   if (hasError) return;
+
   const notes = document.getElementById('inputNotes').value.trim() || null;
   const dateVal = document.getElementById('inputDate').value;
   const timeVal = document.getElementById('inputTime').value;
   if (!dateVal || !timeVal) { showToast('Please set date and time'); return; }
   const timestamp = new Date(dateVal + 'T' + timeVal).toISOString();
+
   readings.unshift({
     id: Date.now().toString(),
     systolic: sys, diastolic: dia,
@@ -941,13 +1093,17 @@ function addReading() {
   });
   readings.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   save();
+
+  // Close the form immediately — force hide
   const overlay = document.getElementById('formOverlay');
   overlay.classList.remove('visible');
   overlay.classList.add('hidden');
   document.getElementById('fab').classList.remove('hidden');
+
   render();
   showToast('Reading saved \u2713');
 }
+
 function openDeleteModal(id) {
   deleteTargetId = id;
   openOverlay('deleteOverlay');
@@ -962,17 +1118,21 @@ function confirmDelete() {
   deleteTargetId = null;
   readings = readings.filter(r => r.id !== id);
   save();
+  // Immediately hide the modal
   const overlay = document.getElementById('deleteOverlay');
   overlay.classList.remove('visible');
   overlay.classList.add('hidden');
   render();
   showToast('Reading deleted');
 }
+
+// ── Edit Time ───────────────────────────────────────────────
 function openEditTime(id) {
   editTargetId = id;
   const r = readings.find(r => r.id === id);
   if (!r) return;
   const d = new Date(r.timestamp);
+  const cat = classifyBP(r.systolic, r.diastolic);
   document.getElementById('editReading').textContent = r.systolic + '/' + r.diastolic + ' mmHg' + (r.pulse ? ' \u00B7 ' + r.pulse + ' bpm' : '');
   document.getElementById('editDate').value = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
   document.getElementById('editTime').value = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
@@ -993,12 +1153,15 @@ function saveEditTime() {
   readings.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   save();
   editTargetId = null;
+  // Immediately hide the modal
   const overlay = document.getElementById('editTimeOverlay');
   overlay.classList.remove('visible');
   overlay.classList.add('hidden');
   render();
   showToast('Time updated \u2713');
 }
+
+// ── Export ───────────────────────────────────────────────────
 function csvEscape(val) {
   const s = String(val);
   if (s.includes(',') || s.includes('"') || s.includes('\n')) {
@@ -1006,29 +1169,28 @@ function csvEscape(val) {
   }
   return s;
 }
+
 function exportCSV() {
   if (readings.length === 0) { showToast('No data to export'); return; }
-  let csv = 'Date,Time,Systolic,Diastolic,Pulse,Category,Notes\n';
+  let csv = 'Date,Time,Systolic,Diastolic\n';
   readings.forEach(r => {
-    const cat = classifyBP(r.systolic, r.diastolic);
     csv += [
       csvEscape(fmtDate(r.timestamp)),
       csvEscape(fmtTime(r.timestamp)),
       r.systolic,
-      r.diastolic,
-      r.pulse || '',
-      csvEscape(cat.label),
-      r.notes ? csvEscape(r.notes) : ''
+      r.diastolic
     ].join(',') + '\n';
   });
   download('bp-readings.csv', csv, 'text/csv');
   showToast('CSV exported \u2713');
 }
+
 function exportJSON() {
   if (readings.length === 0) { showToast('No data to export'); return; }
   download('bp-readings.json', JSON.stringify(readings, null, 2), 'application/json');
   showToast('JSON exported \u2713');
 }
+
 function download(name, content, mime) {
   const blob = new Blob([content], { type: mime });
   const a = document.createElement('a');
@@ -1037,16 +1199,23 @@ function download(name, content, mime) {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+  // Delay revoke to ensure download starts
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
+
+// ── Init ────────────────────────────────────────────────────
 load();
 renderLegend();
 render();
+
+// Update toggle slider after fonts load
 if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(updateToggleSlider);
 } else {
   setTimeout(updateToggleSlider, 100);
 }
+
+// Resize handler for trend chart
 window.addEventListener('resize', () => {
   updateToggleSlider();
   if (!document.getElementById('trendCard').classList.contains('hidden')) {
