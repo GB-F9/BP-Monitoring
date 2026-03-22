@@ -300,6 +300,53 @@
   }
   .report-edit-btn:hover, .report-edit-btn:active { opacity: 1; background: #E8ECF1; color: #2A3F5F; }
 
+  /* Insight Modal */
+  .insight-modal {
+    background: #fff; border-radius: 22px; padding: 28px 24px 22px;
+    width: 88%; max-width: 360px; margin: auto;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    transform: scale(0.9); opacity: 0;
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.25s ease;
+    text-align: center;
+  }
+  .overlay.visible .insight-modal { transform: scale(1); opacity: 1; }
+  .insight-icon { font-size: 44px; margin-bottom: 8px; }
+  .insight-bp {
+    font-family: 'JetBrains Mono', monospace; font-size: 34px; font-weight: 700;
+    letter-spacing: -1px; margin-bottom: 4px;
+  }
+  .insight-cat {
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; padding: 4px 14px; border-radius: 20px;
+    display: inline-block; margin-bottom: 14px;
+  }
+  .insight-desc {
+    font-size: 14px; color: #445; line-height: 1.6; margin-bottom: 14px;
+    padding: 0 4px;
+  }
+  .insight-tips {
+    text-align: left; background: #F8FAFB; border-radius: 12px;
+    padding: 12px 14px; margin-bottom: 18px;
+  }
+  .insight-tips-title {
+    font-size: 11px; font-weight: 700; color: #889; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 8px;
+  }
+  .insight-tip-item {
+    font-size: 13px; color: #445; line-height: 1.5; padding: 3px 0;
+    display: flex; align-items: flex-start; gap: 8px;
+  }
+  .insight-tip-bullet { flex-shrink: 0; margin-top: 2px; }
+  .insight-ok-btn {
+    width: 100%; padding: 14px; font-size: 15px; font-weight: 600;
+    border: none; border-radius: 12px; color: #fff;
+    transition: transform 0.1s;
+  }
+  .insight-ok-btn:active { transform: scale(0.98); }
+  .insight-disclaimer {
+    font-size: 10px; color: #AAB; margin-top: 10px; font-style: italic;
+  }
+
   /* FAB */
   .fab {
     position: fixed; bottom: 28px; left: 50%; margin-left: -28px;
@@ -537,6 +584,19 @@
       <button class="modal-cancel" onclick="event.stopPropagation();closeDeleteModal()">Cancel</button>
       <button class="modal-delete" id="confirmDeleteBtn" onclick="event.stopPropagation();confirmDelete()">Delete</button>
     </div>
+  </div>
+</div>
+
+<!-- Insight Modal Overlay -->
+<div class="overlay center hidden" id="insightOverlay" onclick="closeInsight()">
+  <div class="insight-modal" onclick="event.stopPropagation()">
+    <div class="insight-icon" id="insightIcon"></div>
+    <div class="insight-bp" id="insightBP"></div>
+    <div class="insight-cat" id="insightCat"></div>
+    <div class="insight-desc" id="insightDesc"></div>
+    <div class="insight-tips" id="insightTips"></div>
+    <button class="insight-ok-btn" onclick="closeInsight()">Got it</button>
+    <p class="insight-disclaimer">This is general info, not medical advice. Always consult your doctor.</p>
   </div>
 </div>
 
@@ -966,6 +1026,93 @@ function renderLegend() {
     </div>`).join('');
 }
 
+// ── BP Insights ─────────────────────────────────────────────
+const BP_INSIGHTS = {
+  normal: {
+    icon: '💚',
+    description: 'Your blood pressure is in the healthy range. Great job maintaining a heart-healthy lifestyle!',
+    tips: [
+      { icon: '✅', text: 'Keep up regular exercise — aim for 150 min/week' },
+      { icon: '🥗', text: 'Continue eating a balanced, low-sodium diet' },
+      { icon: '📋', text: 'Keep monitoring regularly to catch any changes early' },
+    ]
+  },
+  elevated: {
+    icon: '💛',
+    description: 'Your blood pressure is slightly above normal. This is a warning sign that you could develop high blood pressure if steps aren\'t taken.',
+    tips: [
+      { icon: '🧂', text: 'Reduce sodium intake to under 2,300 mg/day' },
+      { icon: '🏃', text: 'Increase physical activity — brisk walking helps' },
+      { icon: '⚖️', text: 'If overweight, losing even 5–10 lbs can help' },
+      { icon: '😌', text: 'Practice stress management (deep breathing, meditation)' },
+    ]
+  },
+  highStage1: {
+    icon: '🧡',
+    description: 'Your reading falls in the Stage 1 hypertension range. Your doctor may suggest lifestyle changes and possibly medication depending on your overall risk.',
+    tips: [
+      { icon: '👨‍⚕️', text: 'Discuss with your doctor at your next visit' },
+      { icon: '🧂', text: 'Limit sodium to under 1,500 mg/day' },
+      { icon: '🚭', text: 'Avoid smoking and limit alcohol consumption' },
+      { icon: '📊', text: 'Monitor consistently — track patterns over days' },
+    ]
+  },
+  highStage2: {
+    icon: '❤️‍🔥',
+    description: 'This reading is in the Stage 2 hypertension range. At this level, doctors are likely to prescribe medication along with lifestyle changes.',
+    tips: [
+      { icon: '👨‍⚕️', text: 'Consult your doctor if not already being treated' },
+      { icon: '💊', text: 'Take prescribed medications consistently' },
+      { icon: '📉', text: 'Track readings daily to monitor the trend' },
+      { icon: '🧘', text: 'Reduce stress, prioritize sleep, limit caffeine' },
+    ]
+  },
+  crisis: {
+    icon: '🚨',
+    description: 'This reading is dangerously high. If you\'re also experiencing chest pain, shortness of breath, severe headache, or vision changes, seek emergency care immediately.',
+    tips: [
+      { icon: '🏥', text: 'Seek urgent medical attention if symptoms are present' },
+      { icon: '🪑', text: 'Sit down, rest, and try to stay calm' },
+      { icon: '🔁', text: 'Re-measure after 5 minutes of rest to confirm' },
+      { icon: '📞', text: 'Call your doctor or emergency services if it persists' },
+    ]
+  }
+};
+
+function showInsight(sys, dia) {
+  const cat = classifyBP(sys, dia);
+  const insight = BP_INSIGHTS[cat.key];
+  if (!insight) return;
+
+  document.getElementById('insightIcon').textContent = insight.icon;
+  document.getElementById('insightBP').textContent = sys + '/' + dia;
+  document.getElementById('insightBP').style.color = cat.color;
+
+  const catEl = document.getElementById('insightCat');
+  catEl.textContent = cat.label;
+  catEl.style.color = cat.color;
+  catEl.style.background = cat.bg;
+
+  document.getElementById('insightDesc').textContent = insight.description;
+
+  const tipsEl = document.getElementById('insightTips');
+  tipsEl.innerHTML = '<p class="insight-tips-title">Suggestions</p>' +
+    insight.tips.map(t =>
+      `<div class="insight-tip-item"><span class="insight-tip-bullet">${t.icon}</span><span>${t.text}</span></div>`
+    ).join('');
+
+  const btn = document.querySelector('.insight-ok-btn');
+  btn.style.background = cat.color;
+
+  openOverlay('insightOverlay');
+}
+
+function closeInsight() {
+  const overlay = document.getElementById('insightOverlay');
+  overlay.classList.remove('visible');
+  setTimeout(() => overlay.classList.add('hidden'), 300);
+}
+
 // ── Actions ─────────────────────────────────────────────────
 function switchView(v) {
   currentView = v;
@@ -1098,7 +1245,10 @@ function addReading() {
   document.getElementById('fab').classList.remove('hidden');
 
   render();
-  showToast('Reading saved \u2713');
+  showToast('Reading saved ✓');
+
+  // Show insight pop-up after a brief delay so the form closes first
+  setTimeout(() => showInsight(sys, dia), 400);
 }
 
 function openDeleteModal(id) {
