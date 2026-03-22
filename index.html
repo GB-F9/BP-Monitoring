@@ -866,10 +866,7 @@ function renderReports() {
   let rows = '';
   dates.forEach(dk => {
     const dayR = grouped[dk];
-    const dAvgSys = Math.round(dayR.reduce((s,r) => s + r.systolic, 0) / dayR.length);
-    const dAvgDia = Math.round(dayR.reduce((s,r) => s + r.diastolic, 0) / dayR.length);
-    const dCat = classifyBP(dAvgSys, dAvgDia);
-    rows += `<tr class="report-day-divider"><td colspan="3">${fmtDate(dayR[0].timestamp)}<span class="report-day-avg" style="color:${dCat.color}">Avg ${dAvgSys}/${dAvgDia} mmHg \u00B7 ${dayR.length} reading${dayR.length!==1?'s':''}</span></td></tr>`;
+    rows += `<tr class="report-day-divider"><td colspan="3">${fmtDate(dayR[0].timestamp)}</td></tr>`;
     dayR.forEach(r => {
       const cat = classifyBP(r.systolic, r.diastolic);
       rows += `<tr>
