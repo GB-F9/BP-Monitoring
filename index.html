@@ -382,6 +382,15 @@
   }
   .export-btn:active { background: #F0F4F8; transform: scale(0.97); }
   .export-btn svg { width: 14px; height: 14px; }
+  .import-btn {
+    flex: 1; padding: 10px; font-size: 12px; font-weight: 600;
+    background: #fff; color: #34C759; border: 1.5px solid #34C759;
+    border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    transition: all 0.2s;
+  }
+  .import-btn:active { background: rgba(52,199,89,0.06); transform: scale(0.97); }
+  .import-btn svg { width: 14px; height: 14px; }
 
   /* Report Section */
   .report-section { padding: 0 16px; }
@@ -576,16 +585,21 @@
     </div>
   </div>
 
-  <!-- Export -->
+  <!-- Export / Import -->
   <div class="export-bar" id="exportBar">
     <button class="export-btn" onclick="exportCSV()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Export CSV
+      CSV
     </button>
     <button class="export-btn" onclick="exportJSON()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Export JSON
+      JSON
     </button>
+    <button class="import-btn" onclick="document.getElementById('importFile').click()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Import
+    </button>
+    <input type="file" id="importFile" accept=".json" class="hidden" onchange="importJSON(event)">
   </div>
 
   <!-- Readings List -->
@@ -742,10 +756,17 @@ function dateKey(iso) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 function todayKey() { return dateKey(new Date().toISOString()); }
-function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(readings)); }
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(readings)); }
+  catch(e) { showToast('Storage full \u2014 export your data to free space'); }
+}
 function load() {
   try { readings = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { readings = []; }
-  // Ensure readings are sorted (fixes manually edited or corrupted data)
+  // Filter out corrupted entries missing required fields
+  readings = readings.filter(r =>
+    r && typeof r.systolic === 'number' && typeof r.diastolic === 'number' &&
+    r.timestamp && !isNaN(new Date(r.timestamp).getTime())
+  );
   readings.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 }
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
@@ -989,10 +1010,13 @@ function renderReports() {
 
   const avgSys = Math.round(readings.reduce((s,r) => s + r.systolic, 0) / readings.length);
   const avgDia = Math.round(readings.reduce((s,r) => s + r.diastolic, 0) / readings.length);
-  const maxSys = Math.max(...readings.map(r => r.systolic));
-  const maxDia = Math.max(...readings.map(r => r.diastolic));
-  const minSys = Math.min(...readings.map(r => r.systolic));
-  const minDia = Math.min(...readings.map(r => r.diastolic));
+  // Use actual readings for highest/lowest (not mixed values from different readings)
+  const highestReading = readings.reduce((max, r) => r.systolic > max.systolic ? r : max);
+  const lowestReading = readings.reduce((min, r) => r.systolic < min.systolic ? r : min);
+  const maxSys = highestReading.systolic;
+  const maxDia = highestReading.diastolic;
+  const minSys = lowestReading.systolic;
+  const minDia = lowestReading.diastolic;
   const avgCat = classifyBP(avgSys, avgDia);
   const highCat = classifyBP(maxSys, maxDia);
   const lowCat = classifyBP(minSys, minDia);
@@ -1004,7 +1028,7 @@ function renderReports() {
 
   let rows = '';
   dates.forEach(dk => {
-    const dayR = grouped[dk];
+    const dayR = grouped[dk].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
     rows += `<tr class="report-day-divider"><td colspan="3">${fmtDate(dayR[0].timestamp)} · ${dayR.length} reading${dayR.length!==1?'s':''}</td></tr>`;
     dayR.forEach(r => {
       const cat = classifyBP(r.systolic, r.diastolic);
@@ -1167,6 +1191,7 @@ function showInsight(sys, dia) {
   const cat = classifyBP(sys, dia);
   const insight = BP_INSIGHTS[cat.key];
   if (!insight) return;
+  document.getElementById('fab').classList.add('hidden');
 
   document.getElementById('insightIcon').textContent = insight.icon;
   document.getElementById('insightBP').textContent = sys + '/' + dia;
@@ -1194,7 +1219,10 @@ function showInsight(sys, dia) {
 function closeInsight() {
   const overlay = document.getElementById('insightOverlay');
   overlay.classList.remove('visible');
-  setTimeout(() => overlay.classList.add('hidden'), 300);
+  setTimeout(() => {
+    overlay.classList.add('hidden');
+    document.getElementById('fab').classList.remove('hidden');
+  }, 350);
 }
 
 // ── Actions ─────────────────────────────────────────────────
@@ -1337,11 +1365,13 @@ function addReading() {
 
 function openDeleteModal(id) {
   deleteTargetId = id;
+  document.getElementById('fab').classList.add('hidden');
   openOverlay('deleteOverlay');
 }
 function closeDeleteModal() {
   deleteTargetId = null;
   closeOverlay('deleteOverlay');
+  setTimeout(() => document.getElementById('fab').classList.remove('hidden'), 350);
 }
 function confirmDelete() {
   const id = deleteTargetId;
@@ -1349,10 +1379,10 @@ function confirmDelete() {
   deleteTargetId = null;
   readings = readings.filter(r => r.id !== id);
   save();
-  // Immediately hide the modal
   const overlay = document.getElementById('deleteOverlay');
   overlay.classList.remove('visible');
   overlay.classList.add('hidden');
+  document.getElementById('fab').classList.remove('hidden');
   render();
   showToast('Reading deleted');
 }
@@ -1360,6 +1390,7 @@ function confirmDelete() {
 // ── Edit Time ───────────────────────────────────────────────
 function openEditTime(id) {
   editTargetId = id;
+  document.getElementById('fab').classList.add('hidden');
   const r = readings.find(r => r.id === id);
   if (!r) return;
   const d = new Date(r.timestamp);
@@ -1372,11 +1403,12 @@ function openEditTime(id) {
 function closeEditTime() {
   editTargetId = null;
   closeOverlay('editTimeOverlay');
+  setTimeout(() => document.getElementById('fab').classList.remove('hidden'), 350);
 }
 function saveEditTime() {
   if (!editTargetId) return;
   const r = readings.find(r => r.id === editTargetId);
-  if (!r) return;
+  if (!r) { showToast('Reading not found'); closeEditTime(); return; }
   const dateVal = document.getElementById('editDate').value;
   const timeVal = document.getElementById('editTime').value;
   if (!dateVal || !timeVal) { showToast('Please set date and time'); return; }
@@ -1384,10 +1416,10 @@ function saveEditTime() {
   readings.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
   save();
   editTargetId = null;
-  // Immediately hide the modal
   const overlay = document.getElementById('editTimeOverlay');
   overlay.classList.remove('visible');
   overlay.classList.add('hidden');
+  document.getElementById('fab').classList.remove('hidden');
   render();
   showToast('Time updated \u2713');
 }
@@ -1498,11 +1530,9 @@ function show10DayInsights() {
     advice.push({ icon: '\uD83D\uDC8A', text: 'Do not skip or adjust medications without your doctor\'s guidance.' });
   }
 
-  // Add variability and consistency advice
-  if (sysRange > 20) {
-    advice.push({ icon: '\uD83D\uDD04', text: variabilityText });
-  }
-  if (pctAboveNormal >= 70 && overallCat.key !== 'normal') {
+  // Add variability and consistency advice (show for all ranges)
+  advice.push({ icon: '\uD83D\uDD04', text: variabilityText });
+  if (pctAboveNormal >= 70) {
     advice.push({ icon: '\uD83D\uDCC5', text: pctAboveNormal + '% of days were above normal \u2014 this pattern suggests sustained elevation, not just occasional spikes.' });
   }
 
@@ -1595,6 +1625,46 @@ function download(name, content, mime) {
   document.body.removeChild(a);
   // Delay revoke to ensure download starts
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+// ── Import ──────────────────────────────────────────────────
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (!Array.isArray(imported)) { showToast('Invalid format: expected an array'); return; }
+      // Validate each reading has required fields
+      const valid = imported.filter(r =>
+        r.systolic && r.diastolic && r.timestamp &&
+        typeof r.systolic === 'number' && typeof r.diastolic === 'number'
+      );
+      if (valid.length === 0) { showToast('No valid readings found in file'); return; }
+      // Merge: add imported readings that don't already exist (by id or timestamp match)
+      const existingIds = new Set(readings.map(r => r.id));
+      const existingTimestamps = new Set(readings.map(r => r.timestamp));
+      let added = 0;
+      valid.forEach(r => {
+        // Ensure each imported reading has an id
+        if (!r.id) r.id = Date.now().toString() + Math.random().toString(36).slice(2, 6);
+        if (!existingIds.has(r.id) && !existingTimestamps.has(r.timestamp)) {
+          readings.push(r);
+          added++;
+        }
+      });
+      readings.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      save();
+      render();
+      showToast(added + ' reading' + (added !== 1 ? 's' : '') + ' imported' + (valid.length - added > 0 ? ' (' + (valid.length - added) + ' duplicates skipped)' : ''));
+    } catch (err) {
+      showToast('Error reading file: invalid JSON');
+    }
+    // Reset file input so same file can be re-imported
+    event.target.value = '';
+  };
+  reader.readAsText(file);
 }
 
 // ── Init ────────────────────────────────────────────────────
